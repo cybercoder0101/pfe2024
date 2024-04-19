@@ -19,6 +19,6 @@ public class Adresse {
     private String pays;
     private String ville;
     private String emplacement;
-    @OneToMany(mappedBy = "adresse",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "adresse")
     private List<Utilisateur> utilisateurs;
 }

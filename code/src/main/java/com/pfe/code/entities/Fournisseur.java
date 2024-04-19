@@ -1,9 +1,6 @@
 package com.pfe.code.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +19,7 @@ import java.util.List;
 public class Fournisseur extends Utilisateur{
 
     private String description;
-    @OneToMany(mappedBy = "fournisseur",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "fournisseur",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Produit> produits;
 
 }

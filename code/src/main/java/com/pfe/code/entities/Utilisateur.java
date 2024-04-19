@@ -22,8 +22,8 @@ public class Utilisateur {
    private String password;
    @Column(unique = true)
    private String email;
-   @ManyToOne
-   @JoinColumn(name = "adresse_id")
+   @ManyToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "adresse")
    private Adresse adresse;
 
 
