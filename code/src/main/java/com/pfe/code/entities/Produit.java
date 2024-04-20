@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -20,12 +22,14 @@ public class Produit {
     @ManyToOne
     @JoinColumn(name = "fourniseur_id")
     private Fournisseur fournisseur;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="panier_id")
     private Panier panier;
     @ManyToOne
     private Categorie categorie;
     @ManyToOne
     private SousCategorie sousCategorie;
+    @ManyToMany(mappedBy = "produits")
+    private List<Commande> commandes;
 
 }

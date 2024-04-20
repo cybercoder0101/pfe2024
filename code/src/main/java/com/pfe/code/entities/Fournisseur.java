@@ -22,5 +22,5 @@ public class Fournisseur extends Utilisateur{
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "fournisseur_produit", joinColumns = @JoinColumn(name = "fournisseur_id"), inverseJoinColumns = @JoinColumn(name = "produit_id"))
     private List<Produit> produits;
-    private boolean etat;
+    private Boolean etat;
 }
