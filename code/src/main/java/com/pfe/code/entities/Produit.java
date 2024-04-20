@@ -20,4 +20,12 @@ public class Produit {
     @ManyToOne
     @JoinColumn(name = "fourniseur_id")
     private Fournisseur fournisseur;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="panier_id")
+    private Panier panier;
+    @ManyToOne
+    private Categorie categorie;
+    @ManyToOne
+    private SousCategorie sousCategorie;
+
 }

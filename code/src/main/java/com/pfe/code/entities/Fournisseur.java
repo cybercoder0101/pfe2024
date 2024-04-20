@@ -19,7 +19,8 @@ import java.util.List;
 public class Fournisseur extends Utilisateur{
 
     private String description;
-    @OneToMany(mappedBy = "fournisseur",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name = "fournisseur_produit", joinColumns = @JoinColumn(name = "fournisseur_id"), inverseJoinColumns = @JoinColumn(name = "produit_id"))
     private List<Produit> produits;
-
+    private boolean etat;
 }
