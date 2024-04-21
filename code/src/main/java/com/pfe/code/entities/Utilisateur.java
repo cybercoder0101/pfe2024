@@ -1,5 +1,6 @@
 package com.pfe.code.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class Utilisateur {
    private Long Id;
    private String nom;
    private String prenom;
+   @JsonIgnore
    private String password;
    @Column(unique = true)
    private String email;

@@ -19,6 +19,6 @@ public class ServiceLivraison extends Utilisateur{
     @OneToMany(mappedBy = "serviceLivraison", fetch = FetchType.EAGER)
 
     private List<Livreur> livreurs;
-    @OneToMany
+    @OneToMany(mappedBy = "serviceLivraison")
     private List<Commande>commandes;
 }

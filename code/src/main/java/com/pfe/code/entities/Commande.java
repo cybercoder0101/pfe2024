@@ -26,9 +26,8 @@ public class Commande {
     @ManyToOne
     @JoinColumn(name = "livreur_id")
     private Livreur livreur;
-    @ManyToMany
-    @JoinTable(name = "commande_produit", joinColumns = @JoinColumn(name = "commande_id"), inverseJoinColumns = @JoinColumn(name = "produit_id")
-    )
+    @OneToMany
+    @JoinTable(name = "commande_produit", joinColumns = @JoinColumn(name = "commande_id"), inverseJoinColumns = @JoinColumn(name = "produit_id"))
     private List<Produit> produits;
 
 

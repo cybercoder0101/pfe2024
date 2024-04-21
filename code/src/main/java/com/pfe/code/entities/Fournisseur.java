@@ -1,5 +1,6 @@
 package com.pfe.code.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,8 +20,9 @@ import java.util.List;
 public class Fournisseur extends Utilisateur{
 
     private String description;
+
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "fournisseur_produit", joinColumns = @JoinColumn(name = "fournisseur_id"), inverseJoinColumns = @JoinColumn(name = "produit_id"))
     private List<Produit> produits;
-    private Boolean etat;
+    private Boolean etat=false;
 }

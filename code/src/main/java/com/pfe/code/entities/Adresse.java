@@ -1,6 +1,7 @@
 package com.pfe.code.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Adresse {
     private String pays;
     private String ville;
     private String emplacement;
+    @JsonIgnore
     @OneToMany(mappedBy = "adresse")
     private List<Utilisateur> utilisateurs;
 }
