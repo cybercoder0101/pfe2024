@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,10 @@ public class Produit {
     private Double prixProd;
     private String descriptionPro;
     private long quantite=400;
+    private Date datecreation;
 
+
+@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fourniseur_id")
     private Fournisseur fournisseur;
@@ -33,5 +37,8 @@ public class Produit {
     private SousCategorie sousCategorie;
     @ManyToOne
     private Commande commande;
+    @OneToMany(mappedBy = "produit")
+    private List<Image> images;
+
 
 }

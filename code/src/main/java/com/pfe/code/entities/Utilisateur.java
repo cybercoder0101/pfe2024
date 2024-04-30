@@ -9,10 +9,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @AllArgsConstructor
 public class Utilisateur {
    @Id
@@ -20,13 +21,16 @@ public class Utilisateur {
    private Long Id;
    private String nom;
    private String prenom;
-   @JsonIgnore
+   private String telephone;
    private String password;
    @Column(unique = true)
    private String email;
    @ManyToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "adresse")
    private Adresse adresse;
+   @Enumerated(EnumType.STRING)
+   private Role role;
+
 
 
 }

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 
 
 public class Marchand extends Utilisateur{

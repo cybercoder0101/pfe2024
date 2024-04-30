@@ -30,6 +30,7 @@ public class Commande {
     @JoinTable(name = "commande_produit", joinColumns = @JoinColumn(name = "commande_id"), inverseJoinColumns = @JoinColumn(name = "produit_id"))
     private List<Produit> produits;
 
+    private Date date;
 
 
 

@@ -15,30 +15,56 @@ import java.util.List;
 public class FournisseurRESTController {
     @Autowired
     FourniseurService fourniseurService;
-    @Autowired
-    ProduitService produitService;
+
     @GetMapping("/all")
-    public List<Fournisseur> getAll(){
+    public List<Fournisseur>getAll(){
         return fourniseurService.getAll();
+
+
     }
 
     @GetMapping("/nomContains/{nom}")
     public List<Fournisseur>getByNomContains(@PathVariable("nom") String nom){
         return fourniseurService.getByNomContains(nom);
     }
-  @PostMapping("/addFournisseur")
-    public Fournisseur createFournisseur(@RequestBody Fournisseur fournisseur){
-      return fourniseurService.saveFournisseur(fournisseur);
-  }
 
-  @DeleteMapping("/supprimerFournisseur/{id}")
+    @GetMapping("/nomAcs")
+    public List<Fournisseur>getByNomAcs(){
+        return fourniseurService.getByNomACS();
+    }
+
+    @GetMapping("/nomDesc")
+    public List<Fournisseur>getByNomDesc(){
+
+        return fourniseurService.getByNomDESC();
+    }
+
+    @GetMapping("/preAcs")
+    public List<Fournisseur>getByPreAcs(){
+        return fourniseurService.getByPreAcs();
+    }
+
+    @GetMapping("/preDesc")
+    public List<Fournisseur>getByPresDes(){
+        return fourniseurService.getByPreDesc();
+    }
+
+
+    @PostMapping("/addFournisseur")
+    public Fournisseur addFournisseur(@RequestBody Fournisseur fournisseur){
+        return fourniseurService.saveFournisseur(fournisseur);
+    }
+
+    @DeleteMapping("/supprimerFournisseur/{id}")
     public void deleteByIdF(@PathVariable("id") Long id){
       fourniseurService.deleteFournisseurById(id);
   }
 
-  @PostMapping("/addProd")
-    public Produit saveProduit(Produit produit){
-        return produitService.saveProduit(produit);
+
+
+  @PutMapping("/updateFour/{id}")
+    public Fournisseur updateF(@PathVariable("id") Long id,@RequestBody Produit produit){
+        return fourniseurService.updateFourbyid(id,produit);
   }
 
 

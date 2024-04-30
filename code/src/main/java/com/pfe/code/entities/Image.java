@@ -4,24 +4,26 @@ package com.pfe.code.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
+@Builder
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Adresse {
+@AllArgsConstructor
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String pays;
-    private String ville;
-    private String emplacement;
+    private String name;
+    private String type;
+    @Column(name = "IMAGE", length = 4048576)
+    @Lob
+    private byte[] image;
+    @ManyToOne
+    @JoinColumn(name="produit_id")
     @JsonIgnore
-    @OneToMany(mappedBy = "adresse")
-    private List<Utilisateur> utilisateurs;
-
+    private Produit produit;
 }
