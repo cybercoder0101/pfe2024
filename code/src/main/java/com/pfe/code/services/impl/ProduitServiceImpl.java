@@ -28,6 +28,26 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
+    public List<Produit> findProd(String terme) {
+        return produitRepository.rechercherProduits(terme);
+    }
+
+    @Override
+    public Produit getProd(Long id) {
+        return produitRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Produit> getByfournisseur(Long id) {
+        return produitRepository.findByFournisseurId(id);
+    }
+
+    @Override
+    public List<Produit> filtre(Double minPrix, Double maxPrix, List<String> categories, List<String> souscategories, Long quantiteMin, Long quantiteMax) {
+        return produitRepository.filtrerProduits(minPrix,maxPrix,categories,souscategories,quantiteMin,quantiteMax);
+    }
+
+    @Override
     public void deleteById(Long id) {
         produitRepository.deleteById(id);
     }

@@ -9,6 +9,11 @@ public interface ProduitService {
     List<Produit> getAll();
     Produit saveProduit(Produit produit);
     Produit updateProduit(Produit produit);
+    List<Produit>findProd(String terme);
+    Produit getProd(Long id);
+    List<Produit> getByfournisseur(Long id);
+
+    List<Produit> filtre(Double minPrix,Double maxPrix, List<String>categories, List<String>souscategories,Long quantiteMin, Long quantiteMax);
     void deleteById(Long id);
 
     List<Produit>findbynomcontains(String nom);

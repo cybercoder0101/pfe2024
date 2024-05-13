@@ -12,6 +12,7 @@ import java.util.List;
 public class CategorieServiceImpl implements CategorieService {
     @Autowired
     CategorieRepository categorieRepository;
+
     @Override
     public Categorie saveCategorie(Categorie categorie) {
         return categorieRepository.save(categorie);
@@ -23,7 +24,13 @@ public class CategorieServiceImpl implements CategorieService {
     }
 
     @Override
+    public Categorie getCategorie(Long id) {
+        return categorieRepository.findById(id).get();
+    }
+
+    @Override
     public void deleteCategorie(Long id) {
+
         categorieRepository.deleteById(id);
 
     }
@@ -34,7 +41,7 @@ public class CategorieServiceImpl implements CategorieService {
     }
 
     @Override
-    public List<Categorie> getByNomC( String nom) {
+    public List<Categorie> getByNomC(String nom) {
         return categorieRepository.findByNomContains(nom);
     }
 

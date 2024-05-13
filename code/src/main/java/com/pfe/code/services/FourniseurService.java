@@ -11,6 +11,8 @@ public interface FourniseurService {
     List<Fournisseur>getAll();
     Fournisseur saveFournisseur(Fournisseur fournisseur);
 
+    Fournisseur getByid(Long id) throws Exception;
+
 
     List<Fournisseur>getByNomContains(String nom);
     List<Fournisseur>getByNomACS();
@@ -23,7 +25,7 @@ public interface FourniseurService {
 
     void deleteFournisseurById(Long id);
 
-    Fournisseur updateFour(String email, Produit produit);
+    Fournisseur updateinfoFour(Long id, Fournisseur fournisseurUp);
     Fournisseur updateFourbyid(Long id, Produit produit);
 
 

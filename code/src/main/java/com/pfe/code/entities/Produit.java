@@ -20,23 +20,20 @@ public class Produit {
     private String nomProd;
     private Double prixProd;
     private String descriptionPro;
-    private long quantite=400;
+    private Long quantite= 400L;
     private Date datecreation;
 
 
-@JsonIgnore
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fourniseur_id")
     private Fournisseur fournisseur;
-    @ManyToOne
-    @JoinColumn(name="panier_id")
-    private Panier panier;
+
     @ManyToOne
     private Categorie categorie;
     @ManyToOne
     private SousCategorie sousCategorie;
-    @ManyToOne
-    private Commande commande;
+
     @OneToMany(mappedBy = "produit")
     private List<Image> images;
 

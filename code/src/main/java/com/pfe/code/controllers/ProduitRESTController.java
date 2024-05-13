@@ -2,6 +2,7 @@ package com.pfe.code.controllers;
 
 import com.pfe.code.entities.Produit;
 import com.pfe.code.services.ProduitService;
+import com.pfe.code.services.request.ProduitFilterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,8 @@ import java.util.List;
 public class ProduitRESTController {
     @Autowired
     ProduitService produitService;
+
+
 
     @GetMapping("/allprods")
     public List<Produit> getAll(){
@@ -28,6 +31,18 @@ public class ProduitRESTController {
         return produitService.updateProduit(produit);
     }
 
+    @GetMapping("/filtre")
+    public List<Produit>filtre(@RequestBody ProduitFilterRequest produitFilterRequest){
+        return produitService.filtre(produitFilterRequest.getMinPrix(), produitFilterRequest.getMaxPrix(),
+                produitFilterRequest.getCategories(),produitFilterRequest.getSouscategories(),
+                produitFilterRequest.getQuantiteMin(),produitFilterRequest.getQuantiteMax());
+    }
+
+
+    @GetMapping("/search")
+    public List<Produit> rechercherProduits(@RequestParam String terme) {
+        return produitService.findProd(terme);
+    }
     @DeleteMapping("/supprimer/{id}")
     public void delete(@PathVariable("id") Long id){
         produitService.deleteById(id);
@@ -42,11 +57,19 @@ public class ProduitRESTController {
     public List<Produit> getProduitByCatid(@PathVariable("idCat") Long idCat){
         return produitService.findbycategorieId(idCat);
     }
-
+    @GetMapping("/detailprod/{id}")
+    public Produit getProduit(@PathVariable("id") Long id){
+        return produitService.getProd(id);
+    }
 
     @GetMapping("/prodcatnom/{nomCat}")
     public List<Produit> getProdCatn(@PathVariable("nomCat") String nomCat){
         return produitService.findByNomCat(nomCat);
+    }
+
+    @GetMapping("/fournisseur/{id}")
+    public List<Produit>getByIdF(@PathVariable("id") Long id){
+        return produitService.getByfournisseur(id);
     }
 
     @GetMapping("/prodcatacs")

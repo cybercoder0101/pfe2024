@@ -4,11 +4,13 @@ import com.pfe.code.entities.Fournisseur;
 import com.pfe.code.entities.Produit;
 import com.pfe.code.entities.Role;
 import com.pfe.code.repositories.FournisseurRepository;
+import com.pfe.code.services.Exceptions.GlobalException;
 import com.pfe.code.services.FourniseurService;
 import com.pfe.code.services.ProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +31,19 @@ public class FourniseurServiceImpl implements FourniseurService {
 
     @Override
     public Fournisseur saveFournisseur(Fournisseur fournisseur) {
+        fournisseur.setProduits(new ArrayList<Produit>());
         fournisseur.setRole(Role.FOURNISSEUR);
         return fournisseurRepository.save(fournisseur);
+    }
+
+    @Override
+    public Fournisseur getByid(Long id) throws Exception {
+        Optional<Fournisseur> fournisseur= fournisseurRepository.findById(id);
+        if (fournisseur.isEmpty()) {
+            throw new GlobalException("Fournisseur with ID " + id + " not found");
+        }
+
+        return fournisseurRepository.findById(id).get();
     }
 
     @Override
@@ -74,23 +87,22 @@ return fournisseurRepository.trierOrderByNomASC();
 
 
     @Override
-    public Fournisseur updateFour(String email, Produit produit) {
-        Optional<Fournisseur> optionalFournisseur = fournisseurRepository.findByEmail(email);
-        if (optionalFournisseur.isPresent()) {
-            Fournisseur fournisseur = optionalFournisseur.get();
-            List<Produit> produits = fournisseur.getProduits();
+    public Fournisseur updateinfoFour(Long id, Fournisseur fournisseurUp) {
+        Optional<Fournisseur> fournisseur= fournisseurRepository.findById(id);
+        if (fournisseur.isEmpty()) {
+            throw new GlobalException("Fournisseur not found");
 
-            produits.add(produit);
-            produit.setFournisseur(fournisseur); // Mettre à jour la référence du produit vers le fournisseur
-            fournisseur.setProduits(produits);
-
-
-            return fournisseurRepository.save(fournisseur);
-        } else {
-            // Gérer le cas où aucun fournisseur avec cet ID n'est trouvé
-            // Par exemple, vous pouvez lever une exception ou retourner null
-            return null;
         }
+        else {
+            fournisseur.get().setNom(fournisseurUp.getNom());
+            fournisseur.get().setPrenom(fournisseurUp.getPrenom());
+            fournisseur.get().setDescription(fournisseurUp.getDescription());
+            fournisseur.get().setTelephone(fournisseurUp.getTelephone());
+           fournisseur.get().setAdresse(fournisseurUp.getAdresse());
+            return fournisseurRepository.save(fournisseur.get());
+        }
+
+
     }
 
     @Override

@@ -13,6 +13,7 @@ import java.util.List;
 public interface ProduitRepository extends JpaRepository<Produit, Long> {
     //recherche par nom
     List<Produit> findByNomProdContains(String nom);
+    List<Produit> findByFournisseurId(Long id);
 
 
 
@@ -51,15 +52,15 @@ List<Produit>orderByCategorieDesc();
 
     //filtre
     @Query("SELECT p FROM Produit p " +
-            "WHERE (:minPrix IS NULL OR p.prixProd >= :minPrix) " +
-            "AND (:maxPrix IS NULL OR p.prixProd <= :maxPrix) " +
-            "AND (:categories IS NULL OR p.categorie.nom IN :categories) " +
+            "WHERE (coalesce(:minPrix,null )IS NULL OR p.prixProd >= :minPrix ) " +
+            "AND (coalesce(:maxPrix ,null ) IS NULL OR p.prixProd <= :maxPrix) " +
+            "AND (coalesce(:categories,null ) IS NULL OR p.categorie.nom IN :categories) " +
 
-            "AND (:souscategories IS NULL OR p.sousCategorie.nom IN :souscategories)" +
+            "AND (coalesce(:souscategories,null ) IS NULL OR p.sousCategorie.nom IN :souscategories)" +
 
 
-            "AND (:quantiteMin IS NULL OR p.quantite >= :quantiteMin) " +
-            "AND (:quantiteMax IS NULL OR p.quantite <= :quantiteMax)")
+            "AND (coalesce(:quantiteMin,null ) IS NULL OR p.quantite >= :quantiteMin) " +
+            "AND (coalesce(:quantiteMax,0) IS NULL OR p.quantite <= :quantiteMax)")
     List<Produit> filtrerProduits(
             @Param("minPrix") Double minPrix,
             @Param("maxPrix") Double maxPrix,
@@ -67,6 +68,11 @@ List<Produit>orderByCategorieDesc();
             @Param("souscategories") List<String> souscategories,
             @Param("quantiteMin") Long quantiteMin,
             @Param("quantiteMax") Long quantiteMax);
+    @Query("SELECT p FROM Produit p WHERE " +
+            "(LOWER(p.nomProd) LIKE LOWER(CONCAT('%', :terme, '%')) OR p.nomProd IS NULL) " +
+            "AND (LOWER(p.categorie.nom) LIKE LOWER(CONCAT('%', :terme, '%')) OR p.categorie IS NULL) " +
+            "AND (LOWER(p.sousCategorie.nom) LIKE LOWER(CONCAT('%', :terme, '%')) OR p.sousCategorie IS NULL)")
+    List<Produit> rechercherProduits(@Param("terme") String terme);
 
 
 

@@ -30,4 +30,9 @@ public class UserRESTController {
     public List<Utilisateur>getnomContains(@PathVariable("nom") String nom){
         return userService.getByNomcontains(nom);
     }
+
+    @DeleteMapping("/deleteUser/{id}")
+    public void deleteUser(@PathVariable("id")Long id){
+        userService.deleteUserByid(id);
+    }
 }

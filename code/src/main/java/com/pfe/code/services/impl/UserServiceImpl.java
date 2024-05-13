@@ -26,4 +26,9 @@ public class UserServiceImpl implements UserService {
     public List<Utilisateur> getByNomcontains(String nom) {
         return utilisateurRepository.findByNomContains(nom);
     }
+
+    @Override
+    public void deleteUserByid(Long id) {
+        utilisateurRepository.deleteById(id);
+    }
 }

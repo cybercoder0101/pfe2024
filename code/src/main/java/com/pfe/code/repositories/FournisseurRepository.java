@@ -17,6 +17,7 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur,Long> {
 
 List<Fournisseur> findByNom(String nom);
 List<Fournisseur> findByNomContains(String nom);
+
  Optional<Fournisseur> findByEmail(String email);
 
     @Query("select f from Fournisseur f order by  f.nom ASC ")

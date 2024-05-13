@@ -11,10 +11,13 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/fournisseur")
+@RequestMapping("/fournisseurs")
 public class FournisseurRESTController {
     @Autowired
     FourniseurService fourniseurService;
+
+    @Autowired
+   ProduitService produitService;
 
     @GetMapping("/all")
     public List<Fournisseur>getAll(){
@@ -56,16 +59,21 @@ public class FournisseurRESTController {
     }
 
     @DeleteMapping("/supprimerFournisseur/{id}")
-    public void deleteByIdF(@PathVariable("id") Long id){
+    public void deleteById(@PathVariable("id") Long id){
       fourniseurService.deleteFournisseurById(id);
   }
 
 
 
-  @PutMapping("/updateFour/{id}")
+  @PutMapping("/fouraddprod/{id}")
     public Fournisseur updateF(@PathVariable("id") Long id,@RequestBody Produit produit){
         return fourniseurService.updateFourbyid(id,produit);
   }
+
+@PutMapping("/updateinfos/{id}")
+    public Fournisseur updateinfos(@PathVariable("id") Long id,@RequestBody Fournisseur fournisseuru){
+     return fourniseurService.updateinfoFour(id,fournisseuru);
+}
 
 
 }

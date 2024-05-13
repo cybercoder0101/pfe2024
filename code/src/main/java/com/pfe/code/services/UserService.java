@@ -9,4 +9,6 @@ public interface UserService {
     Utilisateur getByEmail(String email);
     List<Utilisateur> getByNomcontains(String nom);
 
+    void deleteUserByid(Long id);
+
 }

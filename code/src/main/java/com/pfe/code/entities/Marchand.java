@@ -1,13 +1,13 @@
 package com.pfe.code.entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -16,8 +16,9 @@ import lombok.NoArgsConstructor;
 
 
 public class Marchand extends Utilisateur{
-    @OneToOne(mappedBy = "marchand", cascade = CascadeType.ALL)
-    private Panier panier;
+    @JsonIgnore
 
+@OneToMany(mappedBy = "marchand")
+    private List<Commande> commandes;
 
 }
