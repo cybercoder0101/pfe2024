@@ -24,6 +24,10 @@ public class CategorieRESTController {
         return categorieService.getnoms();
     }
 
+    @GetMapping("/nomc/{nom}")
+    public List<Categorie>getnomc(@PathVariable("nom")String nom){
+        return categorieService.getByNomC(nom);
+    }
     @PostMapping("/addcat")
     public Categorie savecat(@RequestBody Categorie categorie){
         return categorieService.saveCategorie(categorie);

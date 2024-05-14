@@ -34,6 +34,11 @@ public class SousCategorieServiceImpl implements SousCategorieService {
     }
 
     @Override
+    public List<SousCategorie> getByCategorieId(Long id) {
+        return sousCategorieRepository.findByCategorieId(id);
+    }
+
+    @Override
     public SousCategorie getSousCategorie(Long id) {
         return sousCategorieRepository.findById(id).get();
     }

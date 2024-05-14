@@ -21,6 +21,7 @@ public class Fournisseur extends Utilisateur{
 
     private String description;
 
+
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "fournisseur")
     private List<Produit> produits;
 

@@ -25,12 +25,20 @@ public class FournisseurRESTController {
 
 
     }
+    @GetMapping("/getid/{id}")
+    public Fournisseur getByid(@PathVariable("id")Long id){
+        return fourniseurService.getByid(id);
+    }
 
     @GetMapping("/nomContains/{nom}")
     public List<Fournisseur>getByNomContains(@PathVariable("nom") String nom){
         return fourniseurService.getByNomContains(nom);
     }
 
+    @GetMapping("/pays/{pays}")
+    public List<Fournisseur>getByPays(@PathVariable("pays")String pays){
+        return fourniseurService.findByAdresse_Pays(pays);
+    }
     @GetMapping("/nomAcs")
     public List<Fournisseur>getByNomAcs(){
         return fourniseurService.getByNomACS();

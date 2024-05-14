@@ -11,7 +11,8 @@ public interface FourniseurService {
     List<Fournisseur>getAll();
     Fournisseur saveFournisseur(Fournisseur fournisseur);
 
-    Fournisseur getByid(Long id) throws Exception;
+    Fournisseur getByid(Long id) ;
+    List<Fournisseur>findByAdresse_Pays(String pays);
 
 
     List<Fournisseur>getByNomContains(String nom);

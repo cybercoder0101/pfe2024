@@ -8,6 +8,7 @@ import java.util.List;
 public interface SousCategorieService {
     SousCategorie saveSousCategorie(Long id,SousCategorie sousCategorie);
     SousCategorie updateSousCategorie(SousCategorie sousCategorie);
+    List<SousCategorie>getByCategorieId(Long id);
     SousCategorie getSousCategorie(Long id);
     void deleteSousCategorie(Long id);
     List<SousCategorie> getAll();

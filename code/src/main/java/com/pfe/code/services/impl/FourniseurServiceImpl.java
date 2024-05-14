@@ -37,13 +37,18 @@ public class FourniseurServiceImpl implements FourniseurService {
     }
 
     @Override
-    public Fournisseur getByid(Long id) throws Exception {
+    public Fournisseur getByid(Long id)  {
         Optional<Fournisseur> fournisseur= fournisseurRepository.findById(id);
         if (fournisseur.isEmpty()) {
             throw new GlobalException("Fournisseur with ID " + id + " not found");
         }
 
         return fournisseurRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Fournisseur> findByAdresse_Pays(String pays) {
+        return fournisseurRepository.findByAdresse_Pays(pays);
     }
 
     @Override

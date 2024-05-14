@@ -13,6 +13,7 @@ import java.util.List;
 public interface SousCategorieRepository extends JpaRepository<SousCategorie, Long> {
     @Query("select c.nom from SousCategorie c")
     List<String> nomsouscats();
+    List<SousCategorie>findByCategorieId(Long id);
 
 
 

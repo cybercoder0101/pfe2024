@@ -23,6 +23,7 @@ public class Livreur extends Utilisateur{
     @ManyToOne
     @JoinColumn(name = "serviceLivraison_id")
     private ServiceLivraison serviceLivraison;
+    @JsonIgnore
 
     @OneToMany(mappedBy = "livreur")
     private List<Commande> commandesLivreur;

@@ -1,5 +1,6 @@
 package com.pfe.code.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +18,10 @@ public class SousCategorie {
     private Long  id;
     private String nom;
     private String description;
+    @JsonIgnore
     @ManyToOne
     private Categorie categorie;
+    @JsonIgnore
     @OneToMany(mappedBy = "sousCategorie")
     private List<Produit> produits;
 }

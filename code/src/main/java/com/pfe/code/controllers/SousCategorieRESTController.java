@@ -23,6 +23,10 @@ public class SousCategorieRESTController {
     public SousCategorie getSousCat(@PathVariable("id")Long id){
         return sousCategorieService.getSousCategorie(id);
     }
+    @GetMapping("/getbycatid/{id}")
+    public List<SousCategorie>getByCat(@PathVariable("id")Long id){
+        return sousCategorieService.getByCategorieId(id);
+    }
 
 
     @GetMapping("/allnomss")
@@ -35,8 +39,8 @@ public class SousCategorieRESTController {
         return sousCategorieService.getByNomC(nom);
     }
 
-    @PostMapping("/addsscat")
-    public SousCategorie addSsC(Long id,@RequestBody SousCategorie sousCategorie){
+    @PostMapping("/addsscat/{id}")
+    public SousCategorie addSsC(@PathVariable("id") Long id,@RequestBody SousCategorie sousCategorie){
         return sousCategorieService.saveSousCategorie(id,sousCategorie);
     }
 
