@@ -13,7 +13,7 @@ public interface CommandeService {
     List<Commande>findByLivreurId(Long id);
     Commande createCommande(Long idM,Long idSL,Long idP,Commande commande);
     Commande setLivreurCommande(Long idCom, Long idLivreur);
-    Commande updateEtat(Long idCom, Etat etat);
+    Commande updateEtat(Long idCom,String etat);
 
     void deleteCommandeById(Long id);
 

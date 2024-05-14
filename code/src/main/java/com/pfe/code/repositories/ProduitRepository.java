@@ -22,6 +22,7 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
 
 
 
+
     //Filtre categorie
 @Query("select p from Produit p order by p.categorie.nom ASC")
 

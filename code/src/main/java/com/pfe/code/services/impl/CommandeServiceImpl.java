@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 
@@ -29,12 +30,13 @@ public class CommandeServiceImpl implements CommandeService {
     @Autowired
     LivreurRepository livreurRepository;
 
-    public String generateCommandeReference(String nomMarchand, String nomSL) {
+
+    public String generateCommandeReference(String nomMarchand, String nomSL,String date) {
 
         String m = nomMarchand.substring(0, Math.min(nomMarchand.length(), 2));
         String sl= nomSL.substring(0,Math.min(nomMarchand.length(), 2));
 
-        String ref= m+sl;
+        String ref= m+sl+date;
 
         return ref;
     }
@@ -76,7 +78,7 @@ public class CommandeServiceImpl implements CommandeService {
         Produit produit= produitRepository.findById(idP).get();
         commande.setProduit(produit);
         commande.setDateCommande(sqlDate);
-        String ref= generateCommandeReference(marchand.getNom(),serviceLivraison.getNom());
+        String ref= generateCommandeReference(marchand.getNom(),serviceLivraison.getNom(), commande.getDateCommande().toString());
         commande.setReference(ref);
         commande.setPrixT((long) (commande.getQuantité()*produit.getPrixProd()));
         commande.setMarchand(marchand);
@@ -88,16 +90,29 @@ public class CommandeServiceImpl implements CommandeService {
 
     @Override
     public Commande setLivreurCommande(Long idCom, Long idLivreur) {
-        return null;
+        Livreur livreur= livreurRepository.findById(idLivreur).get();
+        Commande commande=commandeRepository.findById(idCom).get();
+        //email au livreur
+        commande.setLivreur(livreur);
+        return commandeRepository.save(commande);
     }
 
     @Override
-    public Commande updateEtat(Long idCom, Etat etat) {
-        return null;
+    public Commande updateEtat(Long idCom, String etat) {
+
+        //email si marchand pour l'état de sa commande
+        Commande commande= commandeRepository.findById(idCom).get();
+        Etat etat1=Etat.fromJsonString(etat);
+
+       commande.setEtat(etat1);
+
+
+        return commandeRepository.save(commande);
     }
 
     @Override
     public void deleteCommandeById(Long id) {
+        commandeRepository.deleteById(id);
 
     }
 }

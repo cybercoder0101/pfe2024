@@ -18,8 +18,8 @@ public class Commande {
     private Long id;
     private String reference;
     private Date dateCommande;
-    @JsonIgnore
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "marchand_id")
     private Marchand marchand;
@@ -29,12 +29,14 @@ public class Commande {
     private Produit produit;
     private Long quantité;
     private Long prixT;
+
     @JsonIgnore
 
     @ManyToOne
     @JoinColumn(name = "service_livraison_id")
     private ServiceLivraison serviceLivraison;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "livreur_id")
     private Livreur livreur;
