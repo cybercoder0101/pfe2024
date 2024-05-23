@@ -2,11 +2,13 @@ package com.pfe.code.services.impl;
 
 import com.pfe.code.entities.Produit;
 import com.pfe.code.repositories.ProduitRepository;
+import com.pfe.code.services.Exceptions.GlobalException;
 import com.pfe.code.services.ProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProduitServiceImpl implements ProduitService {
@@ -24,7 +26,22 @@ public class ProduitServiceImpl implements ProduitService {
 
     @Override
     public Produit updateProduit(Produit produit) {
-        return produitRepository.save(produit);
+        Optional<Produit> optionalProduit= produitRepository.findById(produit.getIdProd());
+        if (optionalProduit.isEmpty()) {
+            throw new GlobalException("Le produit n'existe pas");
+        }
+        optionalProduit.get().setCategorie(produit.getCategorie());
+       optionalProduit.get().setSousCategorie(produit.getSousCategorie());
+       optionalProduit.get().setPrixProd(produit.getPrixProd());
+       optionalProduit.get().setQuantite(produit.getQuantite());
+       optionalProduit.get().setNomProd(produit.getNomProd());
+       optionalProduit.get().setImages(produit.getImages());
+       optionalProduit.get().setDescriptionPro(produit.getDescriptionPro());
+       optionalProduit.get().setImages(produit.getImages());
+
+
+
+        return produitRepository.save(optionalProduit.get());
     }
 
     @Override
@@ -95,5 +112,15 @@ public class ProduitServiceImpl implements ProduitService {
     @Override
     public List<Produit> findprixbetween(Double p1, Double p2) {
         return produitRepository.findByPrixProdBetween(p1,p2);
+    }
+
+    @Override
+    public List<Produit> OrderByNomasc() {
+        return produitRepository.OrderByNomasc();
+    }
+
+    @Override
+    public List<Produit> OrderByNomdesc() {
+        return produitRepository.OrderByNomdesc();
     }
 }

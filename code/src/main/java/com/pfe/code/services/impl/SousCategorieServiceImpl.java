@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -30,7 +31,11 @@ public class SousCategorieServiceImpl implements SousCategorieService {
 
     @Override
     public SousCategorie updateSousCategorie(SousCategorie sousCategorie) {
-        return sousCategorieRepository.save(sousCategorie);
+        Optional<SousCategorie>optional=sousCategorieRepository.findById(sousCategorie.getId());
+        optional.get().setNom(sousCategorie.getNom());
+        optional.get().setDescription(sousCategorie.getDescription());
+
+        return sousCategorieRepository.save(optional.get());
     }
 
     @Override
@@ -61,5 +66,10 @@ sousCategorieRepository.deleteById(id);
     @Override
     public List<String> getnomSC() {
         return sousCategorieRepository.nomsouscats();
+    }
+
+    @Override
+    public SousCategorie getById(Long id) {
+        return sousCategorieRepository.findById(id).get();
     }
 }

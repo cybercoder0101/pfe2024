@@ -81,5 +81,28 @@ public class ProduitRESTController {
         return produitService.findprixProd(prix);
     }
 
+    @GetMapping("/prixasc")
+    public List<Produit> getByPrixAsc(){
+        return produitService.OrderprixA();
+    }
+
+    @GetMapping("/prixdes")
+    public List<Produit> getByPrixDesc(){
+        return produitService.OrderprixD();
+    }
+
+    @GetMapping("/nomasc")
+    public List<Produit>getnomasc(){
+        return produitService.OrderByNomasc();
+    }
+
+    @GetMapping("/nomdesc")
+    public List<Produit>getnomdesc(){
+        return produitService.OrderByNomdesc();
+    }
+
+
+
+
 
 }

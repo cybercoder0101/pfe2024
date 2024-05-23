@@ -69,23 +69,25 @@ public class CommandeServiceImpl implements CommandeService {
     @Override
     public Commande createCommande(Long idM,Long idSL,Long idP ,Commande commande) {
 
-        LocalDate date= LocalDate.now();
 
-        java.sql.Date sqlDate = java.sql.Date.valueOf(date);
-
-        Marchand marchand = marchandRepository.findById(idM).get();
-        ServiceLivraison serviceLivraison= serviceLivraisonRepository.findById(idSL).get();
-        Produit produit= produitRepository.findById(idP).get();
-        commande.setProduit(produit);
-        commande.setDateCommande(sqlDate);
-        String ref= generateCommandeReference(marchand.getNom(),serviceLivraison.getNom(), commande.getDateCommande().toString());
-        commande.setReference(ref);
-        commande.setPrixT((long) (commande.getQuantité()*produit.getPrixProd()));
-        commande.setMarchand(marchand);
-        commande.setServiceLivraison(serviceLivraison);
-        commande.setEtat(Etat.EN_ATTENTE);
-
-        return commandeRepository.save(commande);
+//        LocalDate date= LocalDate.now();
+//
+//        java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+//
+//        Marchand marchand = marchandRepository.findById(idM).get();
+//        ServiceLivraison serviceLivraison= serviceLivraisonRepository.findById(idSL).get();
+//        Produit produit= produitRepository.findById(idP).get();
+//        commande.setProduit(produit);
+//        commande.setDateCommande(sqlDate);
+//        String ref= generateCommandeReference(marchand.getNom(),serviceLivraison.getNom(), commande.getDateCommande().toString());
+//        commande.setReference(ref);
+//        commande.setPrixT((long) (commande.getQuantité()*produit.getPrixProd()));
+//        commande.setMarchand(marchand);
+//        commande.setServiceLivraison(serviceLivraison);
+//        commande.setEtat(Etat.EN_ATTENTE);
+//
+//        return commandeRepository.save(commande);
+        return null;
     }
 
     @Override

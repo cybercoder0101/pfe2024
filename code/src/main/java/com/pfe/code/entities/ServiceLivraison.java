@@ -17,6 +17,7 @@ import java.util.List;
 
 public class ServiceLivraison extends Utilisateur{
 
+    private String description;
 
     @JsonIgnore
 

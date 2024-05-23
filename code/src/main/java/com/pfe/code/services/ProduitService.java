@@ -2,6 +2,7 @@ package com.pfe.code.services;
 
 
 import com.pfe.code.entities.Produit;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -32,6 +33,12 @@ public interface ProduitService {
     List<Produit>OrderprixD();
 
     List<Produit>findprixbetween(Double p1, Double p2);
+
+
+    List<Produit> OrderByNomasc();
+
+
+    List<Produit> OrderByNomdesc();
 
 
 

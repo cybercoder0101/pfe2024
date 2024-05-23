@@ -32,6 +32,11 @@ List<Produit>OrderedByCategorieAsc();
 @Query("select p from Produit p order by p.categorie.nom DESC")
 List<Produit>orderByCategorieDesc();
 
+    @Query("select p from Produit p order by p.nomProd ASC ")
+List<Produit> OrderByNomasc();
+
+    @Query("select p from Produit p order by p.nomProd DESC ")
+    List<Produit> OrderByNomdesc();
     List<Produit> findByCategorieId(Long id);
 
     @Query("select p from Produit p where p.categorie.nom like ?1")
@@ -53,15 +58,12 @@ List<Produit>orderByCategorieDesc();
 
     //filtre
     @Query("SELECT p FROM Produit p " +
-            "WHERE (coalesce(:minPrix,null )IS NULL OR p.prixProd >= :minPrix ) " +
-            "AND (coalesce(:maxPrix ,null ) IS NULL OR p.prixProd <= :maxPrix) " +
-            "AND (coalesce(:categories,null ) IS NULL OR p.categorie.nom IN :categories) " +
-
-            "AND (coalesce(:souscategories,null ) IS NULL OR p.sousCategorie.nom IN :souscategories)" +
-
-
-            "AND (coalesce(:quantiteMin,null ) IS NULL OR p.quantite >= :quantiteMin) " +
-            "AND (coalesce(:quantiteMax,0) IS NULL OR p.quantite <= :quantiteMax)")
+            "WHERE (:minPrix IS NULL OR p.prixProd >= :minPrix) " +
+            "AND (:maxPrix IS NULL OR p.prixProd <= :maxPrix) " +
+            "AND (:categories IS NULL OR :categories = '' OR p.categorie.nom IN :categories) " +
+            "AND (:souscategories IS NULL OR :souscategories = '' OR p.sousCategorie.nom IN :souscategories) " +
+            "AND (:quantiteMin IS NULL OR p.quantite >= :quantiteMin) " +
+            "AND (:quantiteMax IS NULL OR p.quantite <= :quantiteMax)")
     List<Produit> filtrerProduits(
             @Param("minPrix") Double minPrix,
             @Param("maxPrix") Double maxPrix,
@@ -69,6 +71,7 @@ List<Produit>orderByCategorieDesc();
             @Param("souscategories") List<String> souscategories,
             @Param("quantiteMin") Long quantiteMin,
             @Param("quantiteMax") Long quantiteMax);
+
     @Query("SELECT p FROM Produit p WHERE " +
             "(LOWER(p.nomProd) LIKE LOWER(CONCAT('%', :terme, '%')) OR p.nomProd IS NULL) " +
             "AND (LOWER(p.categorie.nom) LIKE LOWER(CONCAT('%', :terme, '%')) OR p.categorie IS NULL) " +

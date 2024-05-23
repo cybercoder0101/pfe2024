@@ -14,4 +14,5 @@ public interface SousCategorieService {
     List<SousCategorie> getAll();
     List<SousCategorie>getByNomC(String nom);
     List<String>getnomSC();
+    SousCategorie getById(Long id);
 }

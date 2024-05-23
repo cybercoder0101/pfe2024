@@ -26,7 +26,7 @@ public interface FourniseurService {
 
     void deleteFournisseurById(Long id);
 
-    Fournisseur updateinfoFour(Long id, Fournisseur fournisseurUp);
+    Fournisseur updateinfoFour( Fournisseur fournisseurUp);
     Fournisseur updateFourbyid(Long id, Produit produit);
 
 

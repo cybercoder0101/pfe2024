@@ -78,9 +78,9 @@ public class FournisseurRESTController {
         return fourniseurService.updateFourbyid(id,produit);
   }
 
-@PutMapping("/updateinfos/{id}")
-    public Fournisseur updateinfos(@PathVariable("id") Long id,@RequestBody Fournisseur fournisseuru){
-     return fourniseurService.updateinfoFour(id,fournisseuru);
+@PutMapping("/updateinfos")
+    public Fournisseur updateinfos(@RequestBody Fournisseur fournisseuru){
+     return fourniseurService.updateinfoFour(fournisseuru);
 }
 
 

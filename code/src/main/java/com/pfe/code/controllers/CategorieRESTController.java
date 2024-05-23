@@ -24,6 +24,11 @@ public class CategorieRESTController {
         return categorieService.getnoms();
     }
 
+    @GetMapping("/getByid/{id}")
+    public Categorie getbyid(@PathVariable("id")Long id){
+        return categorieService.getCategorie(id);
+    }
+
     @GetMapping("/nomc/{nom}")
     public List<Categorie>getnomc(@PathVariable("nom")String nom){
         return categorieService.getByNomC(nom);

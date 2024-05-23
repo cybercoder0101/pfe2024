@@ -32,9 +32,9 @@ public class LivreurRESTController {
         return livreurService.createLivreur(idSL,livreur);
     }
 
-    @PutMapping("/updateL/{id}")
-    public Livreur update(@PathVariable("id")Long id,@RequestBody Livreur livreur){
-        return livreurService.updateLivreur(id,livreur);
+    @PutMapping("/updateL")
+    public Livreur update(@RequestBody Livreur livreur){
+        return livreurService.updateLivreur(livreur);
     }
 
     @DeleteMapping("/deletelivreur/{id}")

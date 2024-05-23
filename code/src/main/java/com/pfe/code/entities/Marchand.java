@@ -16,6 +16,7 @@ import java.util.List;
 
 
 public class Marchand extends Utilisateur{
+    public  boolean isactive;
     @JsonIgnore
 
 @OneToMany(mappedBy = "marchand")

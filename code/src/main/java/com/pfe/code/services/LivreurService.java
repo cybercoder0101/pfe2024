@@ -8,7 +8,7 @@ public interface LivreurService {
     Livreur createLivreur(Long id,Livreur livreur);
     List<Livreur> getAll();
     Livreur getByid(Long id);
-    Livreur updateLivreur(Long id,Livreur livreur);
+    Livreur updateLivreur(Livreur livreur);
     List<Livreur> getForServiceLivraison(Long id);
     void deleteLivreur(Long id);
 }

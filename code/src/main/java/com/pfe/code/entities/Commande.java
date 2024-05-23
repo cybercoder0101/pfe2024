@@ -24,11 +24,7 @@ public class Commande {
     @JoinColumn(name = "marchand_id")
     private Marchand marchand;
 
-    @ManyToOne
-    @JoinColumn(name = "produit_id")
-    private Produit produit;
-    private Long quantité;
-    private Long prixT;
+
 
     @JsonIgnore
 

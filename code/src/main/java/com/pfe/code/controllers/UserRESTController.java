@@ -35,4 +35,9 @@ public class UserRESTController {
     public void deleteUser(@PathVariable("id")Long id){
         userService.deleteUserByid(id);
     }
+
+    @PutMapping("/changepassword/{id}")
+    public Utilisateur change(@PathVariable("id")Long id,@RequestBody String change){
+       return userService.changepasseword(id,change);
+    }
 }

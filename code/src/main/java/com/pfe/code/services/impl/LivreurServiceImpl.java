@@ -7,6 +7,7 @@ import com.pfe.code.repositories.LivreurRepository;
 import com.pfe.code.repositories.ServiceLivraisonRepository;
 import com.pfe.code.services.Exceptions.GlobalException;
 import com.pfe.code.services.LivreurService;
+import com.pfe.code.services.utils.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ public class LivreurServiceImpl implements LivreurService {
     LivreurRepository livreurRepository;
     @Autowired
     ServiceLivraisonRepository serviceLivraisonRepository;
+    @Autowired
+    EmailSender emailSender;
 
     @Override
     public Livreur createLivreur(Long id, Livreur livreur) {
@@ -42,13 +45,14 @@ public class LivreurServiceImpl implements LivreurService {
     }
 
     @Override
-    public Livreur updateLivreur(Long id,Livreur livreur) {
-        Optional<Livreur> livreurOptional= livreurRepository.findById(id);
+    public Livreur updateLivreur(Livreur livreur) {
+        Optional<Livreur> livreurOptional= livreurRepository.findById(livreur.getId());
         if (livreurOptional.isEmpty())
             throw new GlobalException("Livreur n'est pas présent");
         livreurOptional.get().setNom(livreur.getNom());
         livreurOptional.get().setPrenom(livreur.getPrenom());
         livreurOptional.get().setTelephone(livreur.getTelephone());
+        livreurOptional.get().setEmail(livreur.getEmail());
         livreurOptional.get().setAdresse(livreur.getAdresse());
 
 

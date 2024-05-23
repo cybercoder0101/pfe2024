@@ -43,6 +43,10 @@ public class SousCategorieRESTController {
     public SousCategorie addSsC(@PathVariable("id") Long id,@RequestBody SousCategorie sousCategorie){
         return sousCategorieService.saveSousCategorie(id,sousCategorie);
     }
+    @GetMapping("/getbyid/{id}")
+    public SousCategorie getbyid(@PathVariable("id")Long id){
+        return sousCategorieService.getById(id);
+    }
 
     @PutMapping("/updatecat")
     public SousCategorie updatessc(@RequestBody SousCategorie sousCategorie){

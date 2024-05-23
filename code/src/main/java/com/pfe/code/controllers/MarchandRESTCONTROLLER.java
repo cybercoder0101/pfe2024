@@ -2,6 +2,7 @@ package com.pfe.code.controllers;
 
 import com.pfe.code.entities.Marchand;
 import com.pfe.code.services.MarchandService;
+import com.pfe.code.services.request.Register;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,15 +52,23 @@ public class MarchandRESTCONTROLLER {
 
 
 
-    @PostMapping("/addmarchand")
-    public Marchand addMarchand(@RequestBody Marchand marchand){
-        return marchandService.createMarchand(marchand);
+    @PostMapping("/register")
+    public Marchand addMarchand(@RequestBody Register register){
+        return marchandService.createMarchand(register);
     }
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable("id") Long id){
         marchandService.deleteMarchandById(id);
     }
+    @GetMapping("/verifyEmail/{token}")
+    public Marchand verifyEmail(@PathVariable("token") String token){
+        return marchandService.validateToken(token);
+    }
 
+    @PutMapping("/updateinfos")
+    public Marchand update(@RequestBody Marchand marchand){
+        return marchandService.updateMarchand(marchand);
+    }
 
 }

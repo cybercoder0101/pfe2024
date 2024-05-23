@@ -7,6 +7,7 @@ import com.pfe.code.repositories.FournisseurRepository;
 import com.pfe.code.services.Exceptions.GlobalException;
 import com.pfe.code.services.FourniseurService;
 import com.pfe.code.services.ProduitService;
+import com.pfe.code.services.utils.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,9 @@ public class FourniseurServiceImpl implements FourniseurService {
 
     @Autowired
     ProduitService produitService;
+
+    @Autowired
+    EmailSender emailSender;
 
 
 
@@ -92,8 +96,8 @@ return fournisseurRepository.trierOrderByNomASC();
 
 
     @Override
-    public Fournisseur updateinfoFour(Long id, Fournisseur fournisseurUp) {
-        Optional<Fournisseur> fournisseur= fournisseurRepository.findById(id);
+    public Fournisseur updateinfoFour( Fournisseur fournisseurUp) {
+        Optional<Fournisseur> fournisseur= fournisseurRepository.findById(fournisseurUp.getId());
         if (fournisseur.isEmpty()) {
             throw new GlobalException("Fournisseur not found");
 
@@ -104,6 +108,7 @@ return fournisseurRepository.trierOrderByNomASC();
             fournisseur.get().setDescription(fournisseurUp.getDescription());
             fournisseur.get().setTelephone(fournisseurUp.getTelephone());
            fournisseur.get().setAdresse(fournisseurUp.getAdresse());
+           fournisseur.get().setEmail(fournisseurUp.getEmail());
             return fournisseurRepository.save(fournisseur.get());
         }
 
