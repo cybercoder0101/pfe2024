@@ -3,6 +3,7 @@ package com.pfe.code.controllers;
 import com.pfe.code.entities.SousCategorie;
 import com.pfe.code.services.SousCategorieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 public class SousCategorieRESTController {
     @Autowired
     SousCategorieService sousCategorieService;
+
 
     @GetMapping("/allsc")
     public List<SousCategorie> getAll(){
@@ -39,6 +41,7 @@ public class SousCategorieRESTController {
         return sousCategorieService.getByNomC(nom);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/addsscat/{id}")
     public SousCategorie addSsC(@PathVariable("id") Long id,@RequestBody SousCategorie sousCategorie){
         return sousCategorieService.saveSousCategorie(id,sousCategorie);
@@ -48,11 +51,13 @@ public class SousCategorieRESTController {
         return sousCategorieService.getById(id);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/updatecat")
     public SousCategorie updatessc(@RequestBody SousCategorie sousCategorie){
         return sousCategorieService.updateSousCategorie(sousCategorie);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/deletessc/{id}")
     public void delete(@PathVariable("id") Long id){
         sousCategorieService.deleteSousCategorie(id);

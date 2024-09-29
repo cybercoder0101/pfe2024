@@ -1,5 +1,6 @@
 package com.pfe.code.services;
 
+import com.pfe.code.entities.Administrateur;
 import com.pfe.code.entities.Fournisseur;
 import com.pfe.code.entities.Produit;
 
@@ -7,8 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface FourniseurService {
+public interface FournisseurService {
     List<Fournisseur>getAll();
+    List<String>getAllnoms();
     Fournisseur saveFournisseur(Fournisseur fournisseur);
 
     Fournisseur getByid(Long id) ;
@@ -21,6 +23,8 @@ public interface FourniseurService {
     List<Fournisseur>getByPreAcs();
 
     Optional<Fournisseur> findByEmail(String email);
+
+   Administrateur addadmin(Administrateur administrateur);
 
     List<Fournisseur>getByPreDesc();
 

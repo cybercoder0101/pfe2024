@@ -1,12 +1,14 @@
 package com.pfe.code.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,6 +25,13 @@ public class Commande {
     @ManyToOne
     @JoinColumn(name = "marchand_id")
     private Marchand marchand;
+    private String adresseLivraison;
+    private String emailRec;
+    private String numRec;
+    private Double prixtotal;
+    @OneToMany(mappedBy = "commande" , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<LigneCommande> lignesCommande ;
 
 
 

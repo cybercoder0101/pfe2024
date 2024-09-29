@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface LivreurRepository extends JpaRepository<Livreur, Long> {
+
     List<Livreur> getLivreursByServiceLivraisonId(Long id);
 
 

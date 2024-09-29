@@ -18,6 +18,7 @@ import com.pfe.code.services.utils.EmailSender;
 import org.antlr.v4.runtime.Token;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -36,6 +37,10 @@ public class MarchandServiceImpl implements MarchandService {
     @Autowired
     EmailSender emailSender;
 
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     UtilisateurRepository utilisateurRepository;
     @Autowired
@@ -50,8 +55,8 @@ public class MarchandServiceImpl implements MarchandService {
     @Override
     public Marchand createMarchand(Register register) {
 
-        Optional<Utilisateur> OptionalUser= Optional.ofNullable(utilisateurRepository.findByEmail(register.getEmail()));
-        if(OptionalUser.isPresent())
+        Utilisateur OptionalUser= utilisateurRepository.findByEmail(register.getEmail());
+        if(OptionalUser!=null)
             throw new EmailAlreadyExistsException("Email deja existant");
         Marchand marchand = new Marchand();
         marchand.setEmail(register.getEmail());
@@ -59,11 +64,10 @@ public class MarchandServiceImpl implements MarchandService {
         marchand.setNom(register.getNom());
         marchand.setPrenom(register.getPrenom());
         marchand.setTelephone(register.getTelephone());
-        //encoder le password
-        marchand.setPassword(register.getPassword());
+        marchand.setPassword(bCryptPasswordEncoder.encode(register.getPassword()));
         marchand.setRole(Role.ACHETEUR);
-        marchand.setIsactive(false);
-
+        marchand.setIsactive(true);
+        marchandRepository.save(marchand);
         //envoi de l'envoi de l'email
         String code = this.generateCode();
         VerificationToken token= new VerificationToken(code,marchand);
@@ -128,7 +132,7 @@ public class MarchandServiceImpl implements MarchandService {
     public Marchand validateToken(String code) {
         VerificationToken token = verificationTokenRepository.findByToken(code);
         if(token == null){
-            throw new InvalidTokenException("Invalid Token");
+            throw new InvalidTokenException("INVALID_TOKEN");
         }
 
 
@@ -136,7 +140,7 @@ public class MarchandServiceImpl implements MarchandService {
         Calendar calendar = Calendar.getInstance();
         if ((token.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0){
             verificationTokenRepository.delete(token);
-            throw new ExpiredTokenException("expired Token");
+            throw new ExpiredTokenException("EXPIRED_TOKEN");
         }
         marchand.setIsactive(true);
         marchandRepository.save(marchand);

@@ -1,22 +1,27 @@
 package com.pfe.code.services.impl;
 
+import com.pfe.code.entities.Administrateur;
 import com.pfe.code.entities.Fournisseur;
 import com.pfe.code.entities.Produit;
 import com.pfe.code.entities.Role;
+import com.pfe.code.repositories.AdminRepo;
 import com.pfe.code.repositories.FournisseurRepository;
 import com.pfe.code.services.Exceptions.GlobalException;
-import com.pfe.code.services.FourniseurService;
+import com.pfe.code.services.FournisseurService;
 import com.pfe.code.services.ProduitService;
 import com.pfe.code.services.utils.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.pfe.code.services.tools.EmailMessage.toFournisseur;
+
 @Service
-public class FourniseurServiceImpl implements FourniseurService {
+public class FournisseurServiceImpl implements FournisseurService {
     @Autowired
     FournisseurRepository fournisseurRepository;
 
@@ -26,7 +31,11 @@ public class FourniseurServiceImpl implements FourniseurService {
     @Autowired
     EmailSender emailSender;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    AdminRepo adminRepo;
 
     @Override
     public List<Fournisseur> getAll() {
@@ -34,10 +43,23 @@ public class FourniseurServiceImpl implements FourniseurService {
     }
 
     @Override
+    public List<String> getAllnoms() {
+        return fournisseurRepository.nomsfournisseurs();
+    }
+
+    @Override
     public Fournisseur saveFournisseur(Fournisseur fournisseur) {
         fournisseur.setProduits(new ArrayList<Produit>());
         fournisseur.setRole(Role.FOURNISSEUR);
+        fournisseur.setPassword(bCryptPasswordEncoder.encode(fournisseur.getPassword()));
+        this.sendEmailUser(fournisseur);
         return fournisseurRepository.save(fournisseur);
+    }
+
+    public void sendEmailUser(Fournisseur fournisseur) {
+        String emailBody ="Bonjour "+ "<h2>"+fournisseur.getNom()+"</h2> " +toFournisseur;
+
+        emailSender.sendEmail(fournisseur.getEmail(), emailBody);
     }
 
     @Override
@@ -78,6 +100,13 @@ return fournisseurRepository.trierOrderByNomASC();
     @Override
     public Optional<Fournisseur> findByEmail(String email) {
         return fournisseurRepository.findByEmail(email);
+    }
+
+    @Override
+    public Administrateur addadmin(Administrateur administrateur) {
+        administrateur.setPassword(bCryptPasswordEncoder.encode(administrateur.getPassword()));
+        administrateur.setRole(Role.ADMIN);
+        return adminRepo.save(administrateur);
     }
 
     @Override
@@ -127,6 +156,8 @@ return fournisseurRepository.trierOrderByNomASC();
         }
         return null;
     }
+
+
 
 
 }

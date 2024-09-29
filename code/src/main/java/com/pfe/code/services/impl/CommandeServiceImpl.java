@@ -4,6 +4,7 @@ import com.pfe.code.entities.*;
 import com.pfe.code.repositories.*;
 import com.pfe.code.services.CommandeService;
 import com.pfe.code.services.MarchandService;
+import com.pfe.code.services.utils.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import static com.pfe.code.services.tools.EmailMessage.toFournisseur;
 
 @Service
 
@@ -29,6 +32,9 @@ public class CommandeServiceImpl implements CommandeService {
 
     @Autowired
     LivreurRepository livreurRepository;
+
+    @Autowired
+    EmailSender emailSender;
 
 
     public String generateCommandeReference(String nomMarchand, String nomSL,String date) {
@@ -67,27 +73,32 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     @Override
-    public Commande createCommande(Long idM,Long idSL,Long idP ,Commande commande) {
+    public Commande createCommande(Commande commande) {
 
 
-//        LocalDate date= LocalDate.now();
-//
-//        java.sql.Date sqlDate = java.sql.Date.valueOf(date);
-//
-//        Marchand marchand = marchandRepository.findById(idM).get();
-//        ServiceLivraison serviceLivraison= serviceLivraisonRepository.findById(idSL).get();
-//        Produit produit= produitRepository.findById(idP).get();
-//        commande.setProduit(produit);
-//        commande.setDateCommande(sqlDate);
-//        String ref= generateCommandeReference(marchand.getNom(),serviceLivraison.getNom(), commande.getDateCommande().toString());
-//        commande.setReference(ref);
-//        commande.setPrixT((long) (commande.getQuantité()*produit.getPrixProd()));
-//        commande.setMarchand(marchand);
-//        commande.setServiceLivraison(serviceLivraison);
-//        commande.setEtat(Etat.EN_ATTENTE);
-//
-//        return commandeRepository.save(commande);
-        return null;
+   LocalDate date= LocalDate.now();
+      java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+
+
+      commande.setDateCommande(sqlDate);
+       String ref= generateCommandeReference(commande.getEmailRec(),commande.getNumRec(),commande.getDateCommande().toString());
+       commande.setReference(ref);
+
+       if(commande.getServiceLivraison()!=null){
+           this.sendEmailUser(commande.getServiceLivraison().getEmail(),commande);
+       }
+      this.sendEmailUser(commande.getEmailRec(),commande);
+
+        commande.setEtat(Etat.EN_ATTENTE);
+
+       return commandeRepository.save(commande);
+
+    }
+
+    public void sendEmailUser(String email, Commande commande) {
+        String emailBody ="Bonjour "+ "<h2>"+email+"</h2> "+"nouvelle commande lancée avec la reference:" +commande.getReference();
+
+        emailSender.sendEmail(email, emailBody);
     }
 
     @Override

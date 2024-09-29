@@ -13,4 +13,5 @@ public class ProduitFilterRequest {
     private List<String> souscategories;
     private Long quantiteMin;
     private Long quantiteMax;
+    private List<String> fournisseurs;
 }

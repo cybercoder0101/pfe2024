@@ -11,7 +11,7 @@ public interface CommandeService {
     List<Commande>findBySLId(Long id);
     Commande findByref(String ref);
     List<Commande>findByLivreurId(Long id);
-    Commande createCommande(Long idM,Long idSL,Long idP,Commande commande);
+    Commande createCommande(Commande commande);
     Commande setLivreurCommande(Long idCom, Long idLivreur);
     Commande updateEtat(Long idCom,String etat);
 

@@ -60,8 +60,8 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public List<Produit> filtre(Double minPrix, Double maxPrix, List<String> categories, List<String> souscategories, Long quantiteMin, Long quantiteMax) {
-        return produitRepository.filtrerProduits(minPrix,maxPrix,categories,souscategories,quantiteMin,quantiteMax);
+    public List<Produit> filtre(Double minPrix, Double maxPrix, List<String> categories, List<String> souscategories, Long quantiteMin, Long quantiteMax,List<String>fournisseurs) {
+        return produitRepository.filtrerProduits(minPrix,maxPrix,categories,souscategories,quantiteMin,quantiteMax,fournisseurs);
     }
 
     @Override

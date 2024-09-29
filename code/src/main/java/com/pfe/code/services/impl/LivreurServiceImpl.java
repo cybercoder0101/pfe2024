@@ -1,6 +1,7 @@
 package com.pfe.code.services.impl;
 
 import com.pfe.code.entities.Livreur;
+import com.pfe.code.entities.Marchand;
 import com.pfe.code.entities.Role;
 import com.pfe.code.entities.ServiceLivraison;
 import com.pfe.code.repositories.LivreurRepository;
@@ -10,10 +11,13 @@ import com.pfe.code.services.LivreurService;
 import com.pfe.code.services.utils.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.pfe.code.services.tools.EmailMessage.toLivreur;
 
 @Service
 public class LivreurServiceImpl implements LivreurService {
@@ -24,14 +28,23 @@ public class LivreurServiceImpl implements LivreurService {
     @Autowired
     EmailSender emailSender;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     public Livreur createLivreur(Long id, Livreur livreur) {
         ServiceLivraison serviceLivraison=serviceLivraisonRepository.findById(id).get();
         livreur.setMatricule(livreur.getNom()+serviceLivraison.getNom()+livreur.getAdresse().getPays());
         livreur.setServiceLivraison(serviceLivraison);
+        livreur.setPassword(bCryptPasswordEncoder.encode(livreur.getPassword()));
         livreur.setRole(Role.LIVREUR);
-
+        this.sendEmailUser(livreur);
         return livreurRepository.save(livreur);
+    }
+
+    public void sendEmailUser(Livreur livreur) {
+        String emailBody ="Bonjour "+ "<h2>"+livreur.getNom()+"</h2> " +toLivreur;
+
+        emailSender.sendEmail(livreur.getEmail(), emailBody);
     }
 
     @Override

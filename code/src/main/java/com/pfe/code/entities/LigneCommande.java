@@ -1,6 +1,7 @@
 package com.pfe.code.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,12 +17,13 @@ public class LigneCommande {
     Long id;
     @ManyToOne
     @JoinColumn(name = "commande_id")
+    @JsonBackReference
     private Commande commande;
 
     @ManyToOne
     @JoinColumn(name = "produit_id")
     private Produit produit;
     private Long quantité;
-    private Long prixU;
-    private String AdrRecPro;
+    private Long prixligne;
+    private String adrfour;
 }

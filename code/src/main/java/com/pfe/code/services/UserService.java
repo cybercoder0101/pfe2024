@@ -9,7 +9,9 @@ public interface UserService {
     Utilisateur getByEmail(String email);
     List<Utilisateur> getByNomcontains(String nom);
     Utilisateur changepasseword(Long id,String change);
-
+Utilisateur findByEmail(String email);
     void deleteUserByid(Long id);
+
+    Utilisateur updateinfos(Utilisateur utilisateur);
 
 }

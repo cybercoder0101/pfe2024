@@ -4,12 +4,16 @@ import com.pfe.code.entities.Produit;
 import com.pfe.code.services.ProduitService;
 import com.pfe.code.services.request.ProduitFilterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @CrossOrigin(origins = "*")
+@PreAuthorize("permitAll()")
 @RequestMapping("/produits")
 public class ProduitRESTController {
     @Autowired
@@ -21,11 +25,14 @@ public class ProduitRESTController {
     public List<Produit> getAll(){
         return produitService.getAll();
     }
+
+    @PreAuthorize("hasAuthority('FOURNISSEUR')")
     @PostMapping("/addprod")
     public Produit addProd(@RequestBody Produit produit){
         return produitService.saveProduit(produit);
     }
 
+    @PreAuthorize("hasAuthority('FOURNISSEUR')")
     @PutMapping("/update")
    public Produit update(@RequestBody Produit produit){
         return produitService.updateProduit(produit);
@@ -35,14 +42,16 @@ public class ProduitRESTController {
     public List<Produit>filtre(@RequestBody ProduitFilterRequest produitFilterRequest){
         return produitService.filtre(produitFilterRequest.getMinPrix(), produitFilterRequest.getMaxPrix(),
                 produitFilterRequest.getCategories(),produitFilterRequest.getSouscategories(),
-                produitFilterRequest.getQuantiteMin(),produitFilterRequest.getQuantiteMax());
+                produitFilterRequest.getQuantiteMin(),produitFilterRequest.getQuantiteMax(),produitFilterRequest.getFournisseurs());
     }
 
 
     @GetMapping("/search")
-    public List<Produit> rechercherProduits(@RequestParam String terme) {
+    public List<Produit> rechercherProduits(@RequestBody String terme) {
         return produitService.findProd(terme);
     }
+
+    @PreAuthorize("hasAnyAuthority('FOURNISSEUR','ADMIN')")
     @DeleteMapping("/supprimer/{id}")
     public void delete(@PathVariable("id") Long id){
         produitService.deleteById(id);

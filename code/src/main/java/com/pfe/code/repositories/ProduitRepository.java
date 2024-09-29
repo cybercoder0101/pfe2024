@@ -63,14 +63,16 @@ List<Produit> OrderByNomasc();
             "AND (:categories IS NULL OR :categories = '' OR p.categorie.nom IN :categories) " +
             "AND (:souscategories IS NULL OR :souscategories = '' OR p.sousCategorie.nom IN :souscategories) " +
             "AND (:quantiteMin IS NULL OR p.quantite >= :quantiteMin) " +
-            "AND (:quantiteMax IS NULL OR p.quantite <= :quantiteMax)")
+            "AND (:quantiteMax IS NULL OR p.quantite <= :quantiteMax)"+
+    "AND (:fournisseurs IS NULL OR :fournisseurs='' OR p.fournisseur.nom IN :fournisseurs)")
     List<Produit> filtrerProduits(
             @Param("minPrix") Double minPrix,
             @Param("maxPrix") Double maxPrix,
             @Param("categories") List<String> categories,
             @Param("souscategories") List<String> souscategories,
             @Param("quantiteMin") Long quantiteMin,
-            @Param("quantiteMax") Long quantiteMax);
+            @Param("quantiteMax") Long quantiteMax,
+            @Param("fournisseurs")List<String>fournisseurs);
 
     @Query("SELECT p FROM Produit p WHERE " +
             "(LOWER(p.nomProd) LIKE LOWER(CONCAT('%', :terme, '%')) OR p.nomProd IS NULL) " +

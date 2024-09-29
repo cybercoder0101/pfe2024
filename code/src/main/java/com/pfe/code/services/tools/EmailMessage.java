@@ -7,4 +7,5 @@ public interface EmailMessage {
     public  final String toFournisseur="Votre compte fournisseur vient d'être créé";
     public final String toServiceLivraison="Votre compte Service de livraison vient d'etre créé";
     public final String tokenString ="Le code de verification est:";
+    public static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 }

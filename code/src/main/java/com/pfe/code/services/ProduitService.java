@@ -14,7 +14,7 @@ public interface ProduitService {
     Produit getProd(Long id);
     List<Produit> getByfournisseur(Long id);
 
-    List<Produit> filtre(Double minPrix,Double maxPrix, List<String>categories, List<String>souscategories,Long quantiteMin, Long quantiteMax);
+    List<Produit> filtre(Double minPrix,Double maxPrix, List<String>categories, List<String>souscategories,Long quantiteMin, Long quantiteMax,List<String> fournisseurs);
     void deleteById(Long id);
 
     List<Produit>findbynomcontains(String nom);

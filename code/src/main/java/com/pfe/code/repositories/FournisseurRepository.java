@@ -14,7 +14,8 @@ import java.util.Optional;
 
 public interface FournisseurRepository extends JpaRepository<Fournisseur,Long> {
 
-
+   @Query("select f.nom from Fournisseur f")
+   List<String> nomsfournisseurs();
 List<Fournisseur> findByNom(String nom);
 List<Fournisseur> findByNomContains(String nom);
 List<Fournisseur>findByAdresse_Pays(String pays);
