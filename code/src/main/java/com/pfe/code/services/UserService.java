@@ -3,7 +3,7 @@ package com.pfe.code.services;
 import com.pfe.code.entities.Utilisateur;
 
 import java.util.List;
-
+//principe SRP
 public interface UserService {
     List<Utilisateur> getAll();
     Utilisateur getByEmail(String email);

@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-
+//principe SRP
 public interface ImageService {
     Image getImageDetails(Long id) throws IOException;
     ResponseEntity<byte[]> getImage(Long id) throws IOException;

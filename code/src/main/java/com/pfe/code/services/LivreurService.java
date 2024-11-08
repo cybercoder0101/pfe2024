@@ -3,7 +3,7 @@ package com.pfe.code.services;
 import com.pfe.code.entities.Livreur;
 
 import java.util.List;
-
+//principe SRP
 public interface LivreurService {
     Livreur createLivreur(Long id,Livreur livreur);
     List<Livreur> getAll();

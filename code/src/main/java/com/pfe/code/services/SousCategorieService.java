@@ -4,7 +4,7 @@ import com.pfe.code.entities.SousCategorie;
 import com.pfe.code.repositories.SousCategorieRepository;
 
 import java.util.List;
-
+//principe SRP
 public interface SousCategorieService {
     SousCategorie saveSousCategorie(Long id,SousCategorie sousCategorie);
     SousCategorie updateSousCategorie(SousCategorie sousCategorie);

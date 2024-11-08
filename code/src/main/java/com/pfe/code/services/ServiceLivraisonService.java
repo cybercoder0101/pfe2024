@@ -3,7 +3,7 @@ package com.pfe.code.services;
 import com.pfe.code.entities.ServiceLivraison;
 
 import java.util.List;
-
+//principe SRP
 public interface ServiceLivraisonService {
 
     List<ServiceLivraison> getAll();

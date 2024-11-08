@@ -7,7 +7,7 @@ import com.pfe.code.entities.Produit;
 import java.util.List;
 import java.util.Optional;
 
-
+//principe SRP
 public interface FournisseurService {
     List<Fournisseur>getAll();
     List<String>getAllnoms();

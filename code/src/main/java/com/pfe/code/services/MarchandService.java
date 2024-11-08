@@ -7,7 +7,7 @@ import com.pfe.code.services.request.Register;
 
 import java.util.List;
 import java.util.Optional;
-
+//principe SRP
 public interface MarchandService {
     List<Marchand>getAll();
     Marchand createMarchand(Register register);

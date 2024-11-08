@@ -37,6 +37,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SecParams.Secret)).build();
         jwt = jwt.substring(SecParams.n);
+        System.out.println("Utilisateur connecté");
 
         DecodedJWT decodedJWT = verifier.verify(jwt);
         String username = decodedJWT.getSubject();

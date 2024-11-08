@@ -4,7 +4,7 @@ import com.pfe.code.entities.Commande;
 import com.pfe.code.entities.Etat;
 
 import java.util.List;
-
+//principe SRP
 public interface CommandeService {
     List<Commande> findAll();
     List<Commande>findByMarchandId(Long id);

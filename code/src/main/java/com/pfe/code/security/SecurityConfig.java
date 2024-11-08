@@ -71,23 +71,22 @@ public class SecurityConfig {
                                 "/images/**",
                                 "/souscategories/**",
                                 "/categories/**",
-                                "/commandes/newcommande/**",
-                                "/commandes/**",
-                                "/fournisseurs/**",
-                                "/marchands/**",
-                                "/serviceslivraison/**",
-                                "/livreurs/**",
-                                "/users/**")
+                                "/commandes/newcommande/**"
+
+                                )
                         .permitAll()
+                        .anyRequest().authenticated()
 
 
 
                 )
 
+
                 .addFilterBefore(new JWTAuthenticationFilter(authMgr),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JWTAuthorizationFilter(),
-                        UsernamePasswordAuthenticationFilter.class);
+                        UsernamePasswordAuthenticationFilter.class)
+                ;
 
         return http.build();
     }

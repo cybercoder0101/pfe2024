@@ -5,7 +5,7 @@ import com.pfe.code.entities.Produit;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-
+//principe SRP
 public interface ProduitService {
     List<Produit> getAll();
     Produit saveProduit(Produit produit);
