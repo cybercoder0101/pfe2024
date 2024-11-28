@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,9 +28,9 @@ public class SecurityConfig {
             "/api-docs",
             "/api-docs/**",
             "/swagger-ui.html",
-            "baba/swagger-ui/**",
-            "baba/swagger-ui/index.html#/**",
-            "baba/v3/api-docs/swagger-config/**",
+            "/swagger-ui/**",
+            "/swagger-ui/index.html#/**",
+            "/v3/api-docs/swagger-config/**",
             "/v3/api-docs",
             "/configuration/ui",
             "/swagger-resources/**",
@@ -37,6 +38,31 @@ public class SecurityConfig {
             "/swagger-ui.html",
             "/webjars/**"
     };
+    private static final String[] AdminList={"/all","/deleteUser","/nomcont","/supprimer/**","/addSl","addFournisseur","/marchands"};
+    private static final String [] Service={"/getSl",
+            "/deleteSL",
+            "/updateSl",
+            "/getbyid",
+            "/getforsl",
+            "/addlivreur",
+            "/updateL"};
+    private static final String [] commun={"/changepassword",
+            "/updateinfosuser",
+            "/email",
+            "/categories",
+            "/etats",
+            "/images",
+            "/souscategories",
+            "/users"};
+    private static final String [] Livreur={"/updateL",
+            "/deletelivreur",
+            "/getforsl"};
+    private static final String [] Fournisseur={"/addprod",
+            "/update",
+            "/supprimer",
+};
+
+
 
     @Autowired
     AuthenticationManager authMgr;
@@ -60,6 +86,7 @@ public class SecurityConfig {
                     return cors1;
                 }))
                 .authorizeHttpRequests( authorize -> authorize
+                        .requestMatchers(AUTH_WHITELIST).permitAll()
 
                         .requestMatchers(
                                 "baba/login",
@@ -72,9 +99,14 @@ public class SecurityConfig {
                                 "/souscategories/**",
                                 "/categories/**",
                                 "/commandes/newcommande/**"
+                                ).permitAll()
 
-                                )
-                        .permitAll()
+
+                        .requestMatchers(commun).permitAll()
+                        .requestMatchers(AdminList).hasAuthority("ADMIN")
+                        .requestMatchers(Service).hasAuthority("SERVICE_LIVRAISON")
+                        .requestMatchers(Livreur).hasAuthority("LIVREUR")
+                        .requestMatchers(Fournisseur).hasAuthority("FOURNISSEUR")
                         .anyRequest().authenticated()
 
 
@@ -82,10 +114,10 @@ public class SecurityConfig {
                 )
 
 
-                .addFilterBefore(new JWTAuthenticationFilter(authMgr),
-                        UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JWTAuthorizationFilter(),
-                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthenticationFilter(authMgr),UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthorizationFilter(),UsernamePasswordAuthenticationFilter.class)
+
+
                 ;
 
         return http.build();

@@ -22,7 +22,7 @@ public class UserRESTController {
         return userService.getAll();
     }
 
-
+@PreAuthorize("hasAnyAuthority('ADMIN', 'FOURNISSEUR', 'ACHETEUR', 'SERVICE_LIVRAISON', 'LIVREUR')")
     @GetMapping("/email/{email}")
     public  Utilisateur getByemail(@PathVariable("email") String email){
         return userService.getByEmail(email);

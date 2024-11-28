@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.NotNull;
@@ -28,10 +29,10 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         String jwt = request.getHeader("Authorization");
 
         if (jwt == null || !jwt.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
 
-            System.out.println("lol");
-            System.out.println(jwt);
+
+            System.out.println("token null");
+          //  filterChain.doFilter(request, response);
             return;
         }
 
@@ -48,10 +49,15 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
           Collection<GrantedAuthority>authorities = Collections.singletonList(authority);
 
 
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(username, null, authorities);
+            SecurityContextHolder.getContext().setAuthentication(user);
+            filterChain.doFilter(request, response);
+        }
+        else{
+            System.out.println("acces refusé");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
 
-        filterChain.doFilter(request, response);
+
     }
 }

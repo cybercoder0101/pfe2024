@@ -22,4 +22,6 @@ public class Marchand extends Utilisateur{
 @OneToMany(mappedBy = "marchand")
     private List<Commande> commandes;
 
+    
+
 }

@@ -26,13 +26,13 @@ public class ProduitRESTController {
         return produitService.getAll();
     }
 
-    @PreAuthorize("hasAuthority('FOURNISSEUR')")
+
     @PostMapping("/addprod")
     public Produit addProd(@RequestBody Produit produit){
         return produitService.saveProduit(produit);
     }
 
-    @PreAuthorize("hasAuthority('FOURNISSEUR')")
+
     @PutMapping("/update")
    public Produit update(@RequestBody Produit produit){
         return produitService.updateProduit(produit);
@@ -51,7 +51,6 @@ public class ProduitRESTController {
         return produitService.findProd(terme);
     }
 
-    @PreAuthorize("hasAnyAuthority('FOURNISSEUR','ADMIN')")
     @DeleteMapping("/supprimer/{id}")
     public void delete(@PathVariable("id") Long id){
         produitService.deleteById(id);

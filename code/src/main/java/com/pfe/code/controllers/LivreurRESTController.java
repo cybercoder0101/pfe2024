@@ -22,18 +22,16 @@ public class LivreurRESTController {
         return livreurService.getAll();
     }
 
-    @PreAuthorize("hasAuthority('SERVICE_LIVRAISON')")
+
     @GetMapping("/getbyid/{id}")
     public Livreur getById(@PathVariable("id") Long id){
         return livreurService.getByid(id);
     }
 
-    @PreAuthorize("hasAuthority('SERVICE_LIVRAISON')")
     @GetMapping("/getforsl/{id}")
     public List<Livreur>getLforSL(@PathVariable("id") Long id){
         return livreurService.getForServiceLivraison(id);
     }
-    @PreAuthorize("hasAuthority('SERVICE_LIVRAISON')")
 
     @PostMapping("/addlivreur/{idSL}")
     public Livreur add(@PathVariable("idSL")Long idSL, @RequestBody Livreur livreur){
